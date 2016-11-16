@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Game</OriginalElement>
+  <nodes>
+    <node x="690.1945684523812" y="89.0">Game.Data.ActorStatsSet</node>
+    <node x="1187.1945684523812" y="311.5">Game.Data.Item</node>
+    <node x="280.54166666666674" y="932.0">fr.pixdad.games.TBSGame</node>
+    <node x="1264.6945684523812" y="535.0">Game.Data.WeaponItem</node>
+    <node x="1480.6945684523812" y="579.0">Game.Data.DisposableItem</node>
+    <node x="1116.0695684523812" y="122.0">Game.Data.ActorClass</node>
+    <node x="669.5416666666669" y="579.0">Game.Data.PassiveItem</node>
+    <node x="1142.5695684523812" y="0.0">Game.Data</node>
+    <node x="277.54166666666674" y="1166.0">Game.Screen.FirstScreen</node>
+    <node x="0.0" y="323.0">Game.Screen.TestScreen</node>
+    <node x="931.1945684523812" y="122.0">Game.Data.ActorTeam</node>
+    <node x="907.1945684523812" y="300.0">Game.Actor</node>
+    <node x="276.54166666666663" y="0.0">Game.Level.Level</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Game.Data.Item" target="Game.Data.ActorClass">
+      <point x="-56.75" y="-81.0" />
+      <point x="1243.9445684523812" y="275.0" />
+      <point x="1201.5695684523812" y="275.0" />
+      <point x="28.5" y="47.5" />
+    </edge>
+    <edge source="Game.Data.PassiveItem" target="Game.Data">
+      <point x="-26.5" y="-14.5" />
+      <point x="696.0416666666669" y="515.0" />
+      <point x="679.6945684523812" y="515.0" />
+      <point x="679.6945684523812" y="49.0" />
+      <point x="1146.926711309524" y="49.0" />
+      <point x="-26.14285714285711" y="14.5" />
+    </edge>
+    <edge source="Game.Actor" target="Game.Data.ActorClass">
+      <point x="65.0" y="-92.5" />
+      <point x="1102.1945684523812" y="275.0" />
+      <point x="1144.5695684523812" y="275.0" />
+      <point x="-28.5" y="47.5" />
+    </edge>
+    <edge source="Game.Data.DisposableItem" target="Game.Data.Item">
+      <point x="-32.5" y="-14.5" />
+      <point x="1513.1945684523812" y="505.0" />
+      <point x="1376.361235119048" y="505.0" />
+      <point x="75.66666666666674" y="81.0" />
+    </edge>
+    <edge source="Game.Data.WeaponItem" target="Game.Data">
+      <point x="49.0" y="-58.5" />
+      <point x="1411.6945684523812" y="515.0" />
+      <point x="1424.6945684523812" y="515.0" />
+      <point x="1424.6945684523812" y="59.0" />
+      <point x="1190.4981398809527" y="59.0" />
+      <point x="17.428571428571445" y="14.5" />
+    </edge>
+    <edge source="Game.Screen.TestScreen" target="Game.Level.Level">
+      <point x="151.75" y="-279.5" />
+      <point x="455.25" y="298.0" />
+      <point x="450.04166666666663" y="298.0" />
+      <point x="0.0" y="136.5" />
+    </edge>
+    <edge source="Game.Data.ActorClass" target="Game.Data">
+      <point x="0.0" y="-47.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="fr.pixdad.games.TBSGame" target="Game.Screen.TestScreen">
+      <point x="-113.66666666666674" y="-92.0" />
+      <point x="337.375" y="907.0" />
+      <point x="151.75" y="907.0" />
+      <point x="-151.75" y="279.5" />
+    </edge>
+    <edge source="Game.Level.Level" target="fr.pixdad.games.TBSGame">
+      <point x="115.66666666666674" y="136.5" />
+      <point x="565.7083333333334" y="298.0" />
+      <point x="617.5" y="298.0" />
+      <point x="617.5" y="907.0" />
+      <point x="564.7083333333334" y="907.0" />
+      <point x="113.66666666666663" y="-92.0" />
+    </edge>
+    <edge source="Game.Data.ActorStatsSet" target="Game.Data">
+      <point x="0.0" y="-80.5" />
+      <point x="800.6945684523812" y="59.0" />
+      <point x="1155.6409970238096" y="59.0" />
+      <point x="-17.428571428571445" y="14.5" />
+    </edge>
+    <edge source="Game.Data.Item" target="Game.Data">
+      <point x="56.75" y="-81.0" />
+      <point x="1357.4445684523812" y="275.0" />
+      <point x="1308.0044642857144" y="275.0" />
+      <point x="1308.0044642857144" y="69.0" />
+      <point x="1181.783854166667" y="69.0" />
+      <point x="8.714285714285722" y="14.5" />
+    </edge>
+    <edge source="Game.Data.DisposableItem" target="Game.Data">
+      <point x="32.5" y="-14.5" />
+      <point x="1578.1945684523812" y="49.0" />
+      <point x="1199.2124255952383" y="49.0" />
+      <point x="26.14285714285711" y="14.5" />
+    </edge>
+    <edge source="Game.Data.WeaponItem" target="Game.Data.Item">
+      <point x="-49.0" y="-58.5" />
+      <point x="1313.6945684523812" y="515.0" />
+      <point x="1300.6945684523812" y="515.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="Game.Screen.FirstScreen" target="fr.pixdad.games.TBSGame">
+      <point x="0.0" y="-136.5" />
+      <point x="0.0" y="92.0" />
+    </edge>
+    <edge source="Game.Data.PassiveItem" target="Game.Data.Item">
+      <point x="26.5" y="-14.5" />
+      <point x="749.0416666666669" y="515.0" />
+      <point x="1225.0279017857144" y="515.0" />
+      <point x="-75.66666666666669" y="81.0" />
+    </edge>
+    <edge source="Game.Screen.TestScreen" target="fr.pixdad.games.TBSGame">
+      <point x="151.75" y="279.5" />
+      <point x="455.25" y="907.0" />
+      <point x="451.04166666666674" y="907.0" />
+      <point x="0.0" y="-92.0" />
+    </edge>
+    <edge source="Game.Actor" target="Game.Data.ActorTeam">
+      <point x="-65.0" y="-92.5" />
+      <point x="972.1945684523812" y="275.0" />
+      <point x="985.6945684523812" y="275.0" />
+      <point x="0.0" y="47.5" />
+    </edge>
+    <edge source="Game.Data.ActorTeam" target="Game.Data">
+      <point x="0.0" y="-47.5" />
+      <point x="985.6945684523812" y="69.0" />
+      <point x="1164.3552827380954" y="69.0" />
+      <point x="-8.714285714285722" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8331668331668332" x="869.5557553956835" y="510.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
