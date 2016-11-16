@@ -8,4 +8,4 @@ Le projet est directement importable depuis IntelliJ IDEA
 
 ## Diagramme de Classe actuel
 
-![Diagramme de classe](./core/src/DiagramClass.png)
+![Diagramme de classe](https://raw.githubusercontent.com/pixdad/Tactical-Battle-System/master/core/src/diagramClass.png)
