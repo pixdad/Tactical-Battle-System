@@ -54,9 +54,9 @@ public class Data {
         int porteeMax;
         int Dmg;
 
-        passiveEffects;
+        //passiveEffects;
 
-        targetEffects;
+        //targetEffects;
 
         /**
          * @Brief 0:himself / 1:opponents / 2:allies

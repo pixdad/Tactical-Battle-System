@@ -19,8 +19,8 @@ public class TBSGame extends Game {
 	public void create() {
 		batch = new SpriteBatch();
         font = new BitmapFont();
-        
-        this.setScreen(new TestScreen(this));
+
+        this.addScreen(new TestScreen(this));
 	}
 
 	@Override
