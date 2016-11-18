@@ -29,7 +29,7 @@ public abstract class TiledScreen implements Screen {
         this.game = game;
         map = new TmxMapLoader().load(levelTmxFilename);
 
-        /** Layers from the map : 0 - under entities / 1+ - above entities */
+        /* Layers from the map : 0 - under entities / 1+ - above entities */
         for (int i=0;i<map.getLayers().getCount();i++) {
             layers.add( (TiledMapTileLayer) map.getLayers().get(i) );
         }
@@ -67,7 +67,7 @@ public abstract class TiledScreen implements Screen {
         int[] foregroundLayers = new int[layers.size()-1];
         for (int i=1; i<layers.size();i++) { foregroundLayers[i-1] = i; }
 
-        /** Update & Render entities between layers */
+        /* Update & Render entities between layers */
         renderer.render(backgroundLayers);
         updateScreen(delta);
         renderScreen(delta, game.batch);
