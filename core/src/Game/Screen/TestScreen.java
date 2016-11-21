@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import fr.pixdad.games.TBSGame;
 import fr.pixdad.games.TiledScreen;
 
@@ -24,17 +25,26 @@ public class TestScreen extends TiledScreen {
 
     @Override
     public void renderScreen(float delta, SpriteBatch batch) {
+
+        Vector3 screenpos = camera.project(new Vector3(0,0,0));
         batch.begin();
-        batch.draw(img, pos_col, pos_row);
+        batch.draw(img, screenpos.x, screenpos.y);
         batch.end();
+        //this.camera.position.x = pos_row;
+        //this.camera.position.y = pos_col;
     }
 
     @Override
     public void updateScreen(float delta) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) pos_col -= 32;//200 * Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) pos_col += 32;//200 * Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) pos_row -= 32;//200 * Gdx.graphics.getDeltaTime();
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) pos_row += 32;    //200 * Gdx.graphics.getDeltaTime();
+        moveCameraToLeft = (Gdx.input.isKeyPressed(Input.Keys.LEFT));
+        moveCameraToRight = (Gdx.input.isKeyPressed(Input.Keys.RIGHT));
+        moveCameraToBottom = (Gdx.input.isKeyPressed(Input.Keys.DOWN));
+        moveCameraToTop = (Gdx.input.isKeyPressed(Input.Keys.UP));
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return super.touchDown(screenX, screenY, pointer, button);
     }
 }
 

@@ -1,27 +1,50 @@
 package fr.pixdad.games;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
+
 
 /**
  * Created by David on 17/11/2016.
  * Abscract Screen class for tiled screens. Render entities between layers
  */
-public abstract class TiledScreen implements Screen {
+public abstract class TiledScreen implements Screen, InputProcessor {
 
-    TBSGame game;
-    TiledMap map;
-    OrthogonalTiledMapRenderer renderer;
-    OrthographicCamera camera;
+    protected TBSGame game;
+    protected TiledMap map;
+    protected OrthogonalTiledMapRenderer renderer;
+    protected OrthographicCamera camera;
 
-    ArrayList<TiledMapTileLayer> layers = new ArrayList<TiledMapTileLayer>();
+    protected ArrayList<TiledMapTileLayer> layers = new ArrayList<TiledMapTileLayer>();
+
+    protected Vector2 screenSize;
+    protected Vector2 worldSize;
+    protected Vector2 tileSize;
+
+    protected float[] cameraBounds = new float[4];
+    protected Vector3 cameraPosition;
+    protected boolean moveCameraToLeft = false;
+    protected boolean moveCameraToTop = false;
+    protected boolean moveCameraToRight = false;
+    protected boolean moveCameraToBottom = false;
+    protected float cameraSpeed = 300;
+
+
+
+
 
     /* Methods */
 
@@ -34,9 +57,36 @@ public abstract class TiledScreen implements Screen {
             layers.add( (TiledMapTileLayer) map.getLayers().get(i) );
         }
 
+        worldSize = new Vector2(layers.get(0).getWidth(), layers.get(0).getHeight() );
+        screenSize = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
+        tileSize = new Vector2(layers.get(0).getTileWidth(), layers.get(0).getTileWidth() );
+
+        worldSize = worldSize.scl(tileSize);
+
+        //Boundaries for the camera : left, top, right, bottom
+        float horizontalMargin = (screenSize.x-worldSize.x>0) ? (screenSize.x-worldSize.x)/2 : 0;
+        float verticalMargin = (screenSize.y-worldSize.y>0) ? (screenSize.y-worldSize.y)/2 : 0;
+        cameraBounds[0] = screenSize.x/2 - horizontalMargin;
+        cameraBounds[1] = worldSize.y - screenSize.y/2 + verticalMargin;
+        cameraBounds[2] = worldSize.x - screenSize.x/2 + horizontalMargin;
+        cameraBounds[3] = screenSize.y/2 - verticalMargin;
+
+        System.out.println(worldSize);
+        System.out.println(horizontalMargin);
+        System.out.println(verticalMargin);
+        System.out.println(cameraBounds[0]);
+        System.out.println(cameraBounds[1]);
+        System.out.println(cameraBounds[2]);
+        System.out.println(cameraBounds[3]);
+
         renderer = new OrthogonalTiledMapRenderer(map, 1);
-        camera=new OrthographicCamera(1080,720);
+        camera=new OrthographicCamera(screenSize.x, screenSize.y);//(1080,720);
         camera.setToOrtho(false);
+        cameraPosition = camera.position;
+
+
+
+        Gdx.input.setInputProcessor(this);
     }
 
     /* To-Override Methods */
@@ -44,6 +94,40 @@ public abstract class TiledScreen implements Screen {
     /** Meant to be overrided : render & update entities between layers */
     public abstract void renderScreen(float delta, SpriteBatch batch);
     public abstract void updateScreen(float delta);
+
+    /* Utils methods */
+
+    public Vector3 screenToWorld(Vector3 screenCoord) {
+        return camera.unproject(screenCoord);
+    }
+    public Vector3 worldToScreen(Vector3 worldCoord) {
+        return camera.project(worldCoord);
+    }
+
+    public void renderCamera(float delta) {
+
+        //Translation
+        if(moveCameraToLeft) cameraPosition.x -= cameraSpeed*delta;
+        if(moveCameraToTop) cameraPosition.y += cameraSpeed*delta;
+        if(moveCameraToRight) cameraPosition.x += cameraSpeed*delta;
+        if(moveCameraToBottom) cameraPosition.y -= cameraSpeed*delta;
+
+        // Position compared to cameraBounds
+        if (cameraPosition.x < cameraBounds[0]) cameraPosition.x = cameraBounds[0]; //left
+        if (cameraPosition.y > cameraBounds[1]) cameraPosition.y = cameraBounds[1]; //top
+        if (cameraPosition.x > cameraBounds[2]) cameraPosition.x = cameraBounds[2]; //right
+        if (cameraPosition.y < cameraBounds[3]) cameraPosition.y = cameraBounds[3]; //bottom
+
+        //Update camera position
+        camera.position.set(cameraPosition);
+
+        //Clear screan
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //update camera & refresh view
+        camera.update();
+        renderer.setView(camera);
+    }
 
 
     /* Getters & Setters */
@@ -61,8 +145,12 @@ public abstract class TiledScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        renderer.setView(camera);
 
+        // Camera rendering
+        renderCamera(delta);
+
+
+        // Map rendering
         int[] backgroundLayers = { 0 };
         int[] foregroundLayers = new int[layers.size()-1];
         for (int i=1; i<layers.size();i++) { foregroundLayers[i-1] = i; }
@@ -97,5 +185,55 @@ public abstract class TiledScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+
+    /* Implemented InputProcessor Methods */
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        //Vector3 clickCoordinates = new Vector3(screenX,screenY,0);
+        //cameraPosition = camera.unproject(clickCoordinates);
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        moveCameraToLeft = (screenX > 0 && screenX < tileSize.x);
+        moveCameraToTop = (screenY > 0  && screenY < tileSize.y);
+        moveCameraToRight = (screenX > screenSize.x - tileSize.x && screenX < screenSize.x);
+        moveCameraToBottom = (screenY > screenSize.y - tileSize.y && screenY < screenSize.y);
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
